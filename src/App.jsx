@@ -239,7 +239,7 @@ const ResumeBuilder = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showLanding, setShowLanding] = useState(true);
-  const [authMode, setAuthMode] = useState('login');
+  const [authMode, setAuthMode] = useState('landing'); // Changed from 'login' to 'landing'
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [authError, setAuthError] = useState('');
@@ -525,10 +525,10 @@ const ResumeBuilder = () => {
   }
 
   if (!user || showLanding) {
-    return (
-      <>
-        <ToastContainer toasts={toasts} />
-        {authMode === 'login' || authMode === 'signup' ? (
+    if (authMode === 'login' || authMode === 'signup') {
+      return (
+        <>
+          <ToastContainer toasts={toasts} />
           <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 flex items-center justify-center p-4">
             <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8">
               <div className="text-center mb-8">
@@ -551,14 +551,19 @@ const ResumeBuilder = () => {
               <button onClick={() => setShowLanding(true)} className="w-full mt-4 text-purple-600 text-sm hover:underline">← Back to home</button>
             </div>
           </div>
-        ) : (
+        </>
+      );
+    } else {
+      return (
+        <>
+          <ToastContainer toasts={toasts} />
           <LandingPage 
             onGetStarted={() => setAuthMode('signup')} 
             onLogin={() => setAuthMode('login')} 
           />
-        )}
-      </>
-    );
+        </>
+      );
+    }
   }
 
   return (
