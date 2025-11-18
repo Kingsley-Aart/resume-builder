@@ -285,6 +285,8 @@ const ResumeBuilder = () => {
       if (currentUser) {
         setShowLanding(false);
         loadResumes(currentUser.uid);
+      } else {
+        setShowLanding(true);
       }
     });
     return () => unsubscribe();
